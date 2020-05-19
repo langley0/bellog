@@ -69,7 +69,7 @@ const Content: React.FC<{pages: any[]}> = function({ pages }) {
         <div>
             <ul style={listStyle}>
             {pages.map((page, index) => <li key={index} style={listItemStyle}>
-                <a style={linkStyle} href={`/${page.time.getFullYear()}-${page.time.getMonth().toString().padStart(2, "0")}-${page.time.getDate().toString().padStart(2, "0")}/${page.title}.html`}>
+                <a style={linkStyle} href={`./${page.time.getFullYear()}-${page.time.getMonth().toString().padStart(2, "0")}-${page.time.getDate().toString().padStart(2, "0")}/${page.title}.html`}>
                     <h3>{page.title}</h3>
                     <p>{page.digest}</p>
                 </a>
