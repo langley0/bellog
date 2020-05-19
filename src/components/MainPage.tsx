@@ -2,7 +2,7 @@ import React from "react";
 
 const Header: React.FC<{}> = function() {
     const headerStyle = {
-        backgroundImage: "url(/assets/default_blog_cover.jpg)",
+        backgroundImage: "url(./assets/default_blog_cover.jpg)",
         backgroundSize: "cover",
         width: "100%",
         height: "200px",
@@ -75,7 +75,7 @@ const Content: React.FC<{pages: any[]}> = function({ pages }) {
                 </a>
                 <div style={authorStyle}>
                     <a href="/authors/test" style={linkStyle}>
-                        <div style={{backgroundImage: "url(/assets/authors/test-author.jpg)", ...authorImageStyle}}>
+                        <div style={{backgroundImage: "url(./assets/authors/test-author.jpg)", ...authorImageStyle}}>
                         </div>
                         <p style={authorNameStyle}>{page.author}</p>
                     </a>
