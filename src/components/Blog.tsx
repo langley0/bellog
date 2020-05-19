@@ -21,7 +21,7 @@ const Navbar: React.FC<{}> = function() {
 
 const Cover: React.FC<{title: string}> = function({title}) {
     const coverStyle: React.CSSProperties = {
-        backgroundImage: "url(/assets/default_post_cover.jpg)",
+        backgroundImage: "url(./assets/default_post_cover.jpg)",
         display:"table",
         height: 150,
         width: "100%",
