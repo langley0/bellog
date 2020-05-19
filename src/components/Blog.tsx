@@ -13,7 +13,7 @@ const Navbar: React.FC<{}> = function() {
     return (
         <div style={navStyle}>
             <h5 style={{display: "table-cell"}}>
-                <a id="link-back" href="/" style={linkStyle}>돌아가기</a>
+                <a id="link-back" href="../" style={linkStyle}>돌아가기</a>
             </h5>
         </div>
     )
