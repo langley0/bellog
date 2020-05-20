@@ -1,9 +1,9 @@
 import React from "react";
 import Post from "../Post";
 
-const Header: React.FC<{}> = function() {
+const Header: React.FC<{name: string, email: string}> = function({ name, email }) {
     const headerStyle = {
-        backgroundImage: "url(./assets/default_blog_cover.jpg)",
+        backgroundImage: "url(../assets/default_author_cover.jpg)",
         backgroundSize: "cover",
         width: "100%",
         height: "200px",
@@ -13,16 +13,15 @@ const Header: React.FC<{}> = function() {
     return (
         <div style={headerStyle}>
             <div style={{display: "table-cell", textAlign: "center", backgroundColor: "rgba(12, 12, 48, 0.3)",}}>
-                <h1>BEL 기술 블로그</h1>
-                <p>
-                    Beyond Game ~ BEL 기술 블로그입니다
-                </p>
+                <h1>{name}</h1>
+                <p>{email}</p>
             </div>
         </div>
     );
 }
 
-const Content: React.FC<{pages: Post[]}> = function({ pages }) {
+
+const Content: React.FC<{posts: Post[]}> = function({ posts }) {
 
     const listStyle = {
         listStyle: "none",
@@ -75,16 +74,16 @@ const Content: React.FC<{pages: Post[]}> = function({ pages }) {
     return (
         <div>
             <ul style={listStyle}>
-            {pages.map((post, index) => <li key={index} style={listItemStyle}>
-                <a style={linkStyle} href={"./" + post.getTargets().join("/") + "/" + post.getName() + ".html"}>
-                    <h3>{post.getTitle()}</h3>
-                    <p style={postStyle}>{post.getDigest()}</p>
+            {posts.map((page, index) => <li key={index} style={listItemStyle}>
+                <a style={linkStyle} href={"./" + page.getTargets().join("/") + "/" + page.getName() + ".html"}>
+                    <h3>{page.getTitle()}</h3>
+                    <p style={postStyle}>{page.getDigest()}</p>
                 </a>
                 <div style={authorStyle}>
-                    <a href={`/authors/${post.getAuthor().getId()}.html`} style={linkStyle}>
+                    <a href="/authors/test" style={linkStyle}>
                         <div style={{backgroundImage: "url(./assets/authors/test-author.jpg)", ...authorImageStyle}}>
                         </div>
-                        <p style={authorNameStyle}>{post.getAuthor().getName()}</p>
+                        <p style={authorNameStyle}>{page.getAuthor().getName()}</p>
                     </a>
                 </div>
             </li>)}
@@ -94,20 +93,17 @@ const Content: React.FC<{pages: Post[]}> = function({ pages }) {
 }
 
 
-
-const MainPage: React.FC<{pages: any[]}> = function({ pages }) {
-    return  (
-    <html>
+const Author: React.FC<{name: string, email: string, posts: Post[] }> = function({ name, email, posts}) {
+    return <html>
         <head>
             <meta charSet="utf-8"></meta>
             <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no"></meta>
         </head>
         <body>
-            <Header />
-            <Content pages={pages}/>
+            <Header name={name} email={email}/>
+            <Content posts={posts}/>
         </body>
-    </html>
-    );
+    </html>;
 }
 
-export default MainPage;
+export default Author;

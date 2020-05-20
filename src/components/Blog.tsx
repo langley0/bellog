@@ -13,7 +13,7 @@ const Navbar: React.FC<{}> = function() {
     return (
         <div style={navStyle}>
             <h5 style={{display: "table-cell"}}>
-                <a id="link-back" href="../" style={linkStyle}>돌아가기</a>
+                <a id="link-back" href="../../../" style={linkStyle}>돌아가기</a>
             </h5>
         </div>
     )
@@ -21,7 +21,7 @@ const Navbar: React.FC<{}> = function() {
 
 const Cover: React.FC<{title: string}> = function({title}) {
     const coverStyle: React.CSSProperties = {
-        backgroundImage: "url(../assets/default_post_cover.jpg)",
+        backgroundImage: "url(../../../assets/default_post_cover.jpg)",
         display:"table",
         height: 150,
         width: "100%",
@@ -45,7 +45,7 @@ const Cover: React.FC<{title: string}> = function({title}) {
     </div>);
 }
 
-const Blog: React.FC<{}> = function({children}) {
+const Blog: React.FC<{title: string}> = function({title, children}) {
     const wrapperStyle: React.CSSProperties = {
         maxWidth: 940,
         marginLeft: "auto",
@@ -61,7 +61,7 @@ const Blog: React.FC<{}> = function({children}) {
             <body>
                 <div style={wrapperStyle}>
                     <Navbar />
-                    <Cover title={"This is Title"}/>
+                    <Cover title={title}/>
                     <div>{children}</div>
                 </div>
             </body>
