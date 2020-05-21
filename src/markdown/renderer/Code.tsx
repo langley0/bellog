@@ -1,14 +1,9 @@
 import React from "react";
 import { MDComponent } from "./Interface";
 
-const codeStyle = {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    color: "white",
-    padding: "2px 4px",
-}
-
 const Code: MDComponent = function ({ children }) {
-    return <code style={codeStyle}>{ children } </code>
+    // token 에서 language 를 뽑을수 있을까?
+    return <code className="inlincode">{ children }</code>
 }
 
 export default Code;

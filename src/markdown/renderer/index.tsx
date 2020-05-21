@@ -12,6 +12,8 @@ import Strikethrough from "./Strikethrough";
 import Code from "./Code";
 import Codeblock from "./Codeblock";
 import Image from "./Image";
+import List from "./List";
+import EMail from "./EMail";
 
 let keyIndex = 0;
 function nextkey(): string {
@@ -26,10 +28,12 @@ function getComponent(key: TokenType): (MDComponent | null) {
         strong: Strong,
         em: Em,
         br: () => <br/>,
-        list: ({children}) => <ul>{children}</ul>,
+        list: List,
         listitem: ({children}) => <li>{children}</li>,
-        link: ({ token, children }) => <Link token={token}>{children}</Link>,
+        link: Link,
+        email: EMail,
         heading: Heading,
+        lheading: Heading,
         code: Codeblock,
         inlinecode: Code,
         strikethrough: Strikethrough,

@@ -35,7 +35,7 @@ export default function(src: string, prev: Token): Token | null {
     if (prev.text.indexOf("\n") >= 0) { return null; }
 
     // 이전 토큰을 변경한다
-    prev.type = "heading";
+    prev.type = "lheading";
     prev.depth = depth;
         
     // empty 블럭을 반환한다

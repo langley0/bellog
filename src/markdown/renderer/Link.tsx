@@ -1,6 +1,8 @@
 import React from "react";
+import { MDComponent } from "./Interface";
 
-export default function (props: { children: React.ReactNode, token: any }) {
-    const { token, children } = props;
+const Link: MDComponent =  function ({ token, children }) {
     return (<a href={token.href}>{children}</a>)
 }
+
+export default Link;

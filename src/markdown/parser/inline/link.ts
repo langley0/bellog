@@ -1,5 +1,6 @@
 import Token from "../../Token";
 import { getIndent } from "../utils";
+import e from "express";
 
 function findBraket(src: string, brakets: string): string | null {
     let pos = 0;
@@ -25,10 +26,11 @@ export default function link(src: string): Token | null {
     const leftBracket = src.charAt(pos);
     if (leftBracket !== "[") { return null; }
 
-    const label = findBraket(src.substring(pos + 1), "[]");
+    let label = findBraket(src.substring(pos + 1), "[]");
     if (label === null) { return null; }
     pos += label.length + 1;
-
+    label = label.substring(0, label.length -1)
+    
     let href = "";
 
     const leftParen = src.charAt(pos);
@@ -40,17 +42,24 @@ export default function link(src: string): Token | null {
             // (<href> "title") 의 형식은 지금은 사용할 수 없다
             href = reference.substring(0, reference.length - 1);
         } 
-    }
-
+    } else if (leftParen === "[" ) {
+        const reference = findBraket(src.substring(pos+1), "[]");
+        if (reference !== null) {
+            pos += reference.length + 1;
+            href = reference.substring(0, reference.length - 1);
+        } 
+    } 
 
     if (href === "") {
+        // href 가 얻어지지 않았다면 label 과 같은 이름을 사용한다
+        // reference link 로 간주한다
         href = label;
     }
-    
+
     return {
         type: "link",
         raw: src.substring(0, pos),
-        text: label.substring(0, label.length -1),
+        text: label,
         href: href,
     }
 }

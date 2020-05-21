@@ -27,7 +27,7 @@ export default function fenceCode(src: string): Token | null {
     const lbegin = pos;
     while(pos < max && src.charAt(pos++) !== "\n") { }
     const lend = pos - 1;
-    const language = src.substring(lbegin, lend);
+    const language = src.substring(lbegin, lend).trim();
     
     const codeBegin = pos;
     while(pos < max) {
@@ -46,5 +46,6 @@ export default function fenceCode(src: string): Token | null {
         type: "code",
         raw: src.substring(0, pos),
         text: src.substring(codeBegin, pos-fenceCount-1),
+        language: language,
     }
 }

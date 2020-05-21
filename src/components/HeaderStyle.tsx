@@ -1,5 +1,5 @@
-<!doctype html>
-<html><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no"/><style>
+import React from "react";
+const styleText = `
 /* 
  * Nanum Gothic (Korean) http://www.google.com/webfonts/earlyaccess
  */
@@ -37,4 +37,7 @@
 code { 
     font-family: Consolas;
 }
-</style><link rel="stylesheet" href="./assets/markdown.css"/></head><body><div style="background-color:#f4f4f4;min-height:100%;overflow:hidden"><div style="background-image:url(./assets/default_blog_cover.jpg);background-size:cover;width:100%;height:200px;display:table;color:white"><div style="display:table-cell;text-align:center;background-color:rgba(12, 12, 48, 0.3)"><h1>BEL 기술 블로그</h1><p>Beyond Game ~ BEL 기술 블로그입니다</p></div></div><div style="max-width:940px;margin-left:auto;margin-right:auto;padding-right:5px;padding-left:5px;background-color:#fff"><ul style="list-style:none"><li style="margin:0 40px;padding:50px 0 50px 40px;border-bottom:1px solid #e6e6e6;position:relative"><a style="text-decoration:none;color:#1e1e1e" href="./2020/05/18/test.html"><h3>Sample Blog 샘플 블로그</h3><p style="margin-top:22px;margin-right:160px;overflow:hidden">tech.kakao.com 주의: GitHub Pages 와 Jekyll 에 대해서 충분히 숙지할 것. 주의: Collaborating on projects using issues and pull requests 을 정독. test block 설치 https://github.com/kakao/kakao.github.io  에 push 권한이 있다면: git...</p></a><div style="position:absolute;top:63px;right:0;width:140px"><a href="/authors/langley.html" style="text-decoration:none;color:#1e1e1e"><div style="background-image:url(./assets/authors/test-author.jpg);display:block;width:60px;height:60px;margin:0 auto;border-radius:100%;background-size:cover"></div><p style="margin:12px 0 0 0;font-size:14px;color:#1e1e1e;text-align:center;text-overflow:ellipsis;white-space:nowrap;overflow:hidden">임태현</p></a></div></li></ul></div></div></body></html>
+`;
+
+const HeaderStyle:React.FC<{}> = () => <style dangerouslySetInnerHTML={{__html: styleText}}/>;    
+export default HeaderStyle;

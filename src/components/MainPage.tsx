@@ -1,5 +1,6 @@
 import React from "react";
 import Post from "../Post";
+import HeadStyle from "./HeaderStyle";
 
 const Header: React.FC<{}> = function() {
     const headerStyle = {
@@ -72,8 +73,17 @@ const Content: React.FC<{pages: Post[]}> = function({ pages }) {
         overflow: "hidden"
     }
 
+    const contentStyle: React.CSSProperties = {
+        maxWidth: 940,
+        marginLeft: "auto",
+        marginRight: "auto",
+        paddingRight: 5,
+        paddingLeft: 5,
+        backgroundColor: "#fff"
+    }
+
     return (
-        <div>
+        <div style={contentStyle}>
             <ul style={listStyle}>
             {pages.map((post, index) => <li key={index} style={listItemStyle}>
                 <a style={linkStyle} href={"./" + post.getTargets().join("/") + "/" + post.getName() + ".html"}>
@@ -101,10 +111,14 @@ const MainPage: React.FC<{pages: any[]}> = function({ pages }) {
         <head>
             <meta charSet="utf-8"></meta>
             <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no"></meta>
+            <HeadStyle />
+            <link rel="stylesheet" href="./assets/markdown.css"/>
         </head>
         <body>
-            <Header />
-            <Content pages={pages}/>
+            <div style={{backgroundColor: "#f4f4f4", minHeight: "100%", overflow: "hidden"}}>
+                <Header />
+                <Content pages={pages}/>
+            </div>
         </body>
     </html>
     );

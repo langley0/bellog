@@ -8,6 +8,7 @@ import blockquote from "./blockquote";
 import code from "./code";
 import lheading from "./lheading";
 import fence from "./fence";
+import reference from "./reference";
 
 const rules = [
     space,
@@ -18,8 +19,19 @@ const rules = [
     list,
     hr,
     blockquote,
+    reference,
     paragraph
 ];
+
+function getNextToken(src: string, lastToken: Token): Token | null {
+    for(const rule of rules) {
+        const token = rule(src, lastToken);
+        if (token !== null) {
+            return token;
+        }
+    }
+    return null;
+}
 
 export default function block(src: string): Token | null {
     const tokens: Token[] = [];
@@ -27,29 +39,17 @@ export default function block(src: string): Token | null {
     
     let lastToken: Token = { raw: "", text:"" };
     while(src.length > 0) {
-        let token: Token | null = null;
-        for(const rule of rules) {
-            token = rule(src, lastToken);
-            if (token !== null) {
-                break;
-            }
-        }
-
+        const token = getNextToken(src, lastToken);
         if (token === null) {
             // 해석할수 없는 경우이다
-            //return null;
             break;
         } 
 
-        if (token.type === "blockquote") {
-            const submodule = block(token.text);
-            token.children = submodule?.children;
-        }
-
-
-        tokens.push(token);
         src = src.substring(token.raw.length);
-        lastToken = token;
+        if (token.type !== undefined) {
+            tokens.push(token);
+            lastToken = token;
+        }
     }
 
     return {

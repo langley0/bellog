@@ -1,4 +1,5 @@
 import React from "react";
+import HeadStyle from "./HeaderStyle";
 
 const Navbar: React.FC<{}> = function() {
     const linkStyle: React.CSSProperties = {
@@ -57,12 +58,16 @@ const Blog: React.FC<{title: string}> = function({title, children}) {
             <head>
                 <meta charSet="utf-8"></meta>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no"></meta>
+                <HeadStyle />
+                <link rel="stylesheet" href="../../../assets/markdown.css"/>
             </head>
             <body>
                 <div style={wrapperStyle}>
                     <Navbar />
                     <Cover title={title}/>
-                    <div>{children}</div>
+                    <div className="articlebox">
+                        <div className="markdown-body">{children}</div>
+                    </div>
                 </div>
             </body>
         </html>

@@ -5,14 +5,18 @@ import link from "./link";
 import strikethrough from "./strikethrough";
 import inlinecode from "./inlinecode";
 import image from "./image";
+import br from "./br";
+import autolink from "./autolink";
 
 const rules = [
     link,
+    autolink,
     image,
     inlinecode,
     italic,
     bold,
     strikethrough,
+    br,
 ];
 
 export default function inline(src: string): Token[] {
