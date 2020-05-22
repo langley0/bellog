@@ -6,7 +6,7 @@ import MainPage from "./components/MainPage";
 
 export default class Home {
     buildHtml(posts: Post[]) {
-        const html = "<!doctype html>\n" + renderToStaticMarkup(createElement(MainPage, {pages: posts }));
+        const html = "<!doctype html>\n" + renderToStaticMarkup(createElement(MainPage, { posts }));
         return html;
     }
 }

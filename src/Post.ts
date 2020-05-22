@@ -16,12 +16,19 @@ export default class Post {
     private target: string[];
     private compiled: Token;
     private digest: string;
+    private timestring: string;
 
     private constructor(_path: string, src: string) {
         src = normalize(src);
         const result = frontmatter(src);
         if (result === null) { throw new Error("need title and author information"); }
         const vars = result.variables;
+
+        // 파일의 날짜를 가져온다
+        const stats = fs.statSync(_path);
+        //const fileTimestamp = 
+        const filetime = new Date(stats.mtimeMs);
+        this.timestring = filetime.toLocaleDateString("default") + `  ${filetime.getHours()}:${filetime.getMinutes()}`
         
         // frontmatter 를 제거한 값을 원본으로 사용한다
         this.src = src.substring(result.raw.length);
@@ -77,6 +84,10 @@ export default class Post {
 
     getDigest(): string {
         return this.digest;
+    }
+
+    getTimestring(): string {
+        return this.timestring;
     }
 
     buildHtml(): string {

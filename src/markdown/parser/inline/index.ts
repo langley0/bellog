@@ -19,27 +19,22 @@ const rules = [
     br,
 ];
 
+function getNextToken(src: string): Token | null {
+    for(const rule of rules) {
+        const token = rule(src);
+        if (token !== null) {
+            return token;
+        }
+    }
+    return null;
+}
+
 export default function inline(src: string): Token[] {
     const tokens: Token[] = [];
     let prevText = "";
     
     while(src.length > 0) {
-        let token: Token | null = null;
-        for(const rule of rules) {
-            token = rule(src);
-            if (token !== null) {
-                if (token.type !== "inlinecode") { 
-                    // inline 토큰을 반복해서 해석한다
-                    // 단 inlinecode 는 내부 텍스트를 더이상 수정하지 않는다
-                    const childrenOfChild = inline(token.text);
-                    token.children = childrenOfChild;    
-                }
-
-                src = src.substring(token.raw.length);
-                break;
-            }
-        }
-
+        const token = getNextToken(src);
         if (token === null) {
             // 일반텍스트이다
             //token = { type: "text", raw: src, text: src };
@@ -50,7 +45,19 @@ export default function inline(src: string): Token[] {
                 tokens.push({ type: "text", raw: prevText, text: prevText });
                 prevText = "";
             }
+
             tokens.push(token);
+            src = src.substring(token.raw.length);
+            
+
+            // token 을 다시 inline 파싱한다
+            // inlinecode 는 별도로 처리하지 않는다
+            if (token.type === "inlinecode") { continue; }
+            // autolink 의 경우에도 다시 처리하지 않는다
+            if (token.type === "link" && token.text === token.href) { continue; }
+            
+            const tokenChilren = inline(token.text);
+            token.children = tokenChilren;
         }
     }
 

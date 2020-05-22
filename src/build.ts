@@ -3,7 +3,7 @@ import * as path from "path";
 import Post from "./Post";
 import Home from "./Home";
 import Author from "./Author";
-
+import About from "./About";
 
 function makedir(targetDir: string) {
     if (existsSync(targetDir) === false) {
@@ -64,6 +64,16 @@ function buildPost(post: Post) {
     writeFileSync(targetFileName, html, "utf-8");;
 }
 
+function buildAbout() {
+    // react 객체를 빌드해서 스태틱 파일을 만들어낸다
+    const about = new About();
+    const html = about.buildHtml();
+
+    let targetDir = path.join(__dirname, "/../_sites");
+    let targetFile = path.join(targetDir, "about.html");
+    writeFileSync(targetFile, html, "utf-8");
+}
+
 export default function build() {
      const posts = Post.loadAll(__dirname + "/..");
     if (posts === null) { return; }
@@ -79,4 +89,7 @@ export default function build() {
 
     // 작가페이지를 작성한다
     buildAuthor(posts);
+
+    // about 페이지를 작성한다
+    buildAbout();
 }

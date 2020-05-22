@@ -1,12 +1,6 @@
 html, body {
     height: 100%;
     margin: 0;
-    background-color: #f4f4f4;
-}
-
-.articlebox {
-    padding: 32px;
-    background-color: #fff;
 }
 
 .markdown-body  {
@@ -120,4 +114,9 @@ html, body {
     margin: 24px 0;
     background-color: #e1e4e8;
     border: 0;
+}
+
+.markdown-body ol, 
+.markdown-body ul {
+    padding-left: 2em;
 }
