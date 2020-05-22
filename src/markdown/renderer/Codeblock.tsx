@@ -7,7 +7,7 @@ const codeStyle =
 "code[class*=\"language-\"]": {
     "color": "#ccc",
     "background": "none",
-    "fontFamily": "Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace",
+    "fontFamily": "Consolas, Monaco, monospace",
     "textAlign": "left",
     "whiteSpace": "pre",
     "wordSpacing": "normal",
@@ -25,7 +25,7 @@ const codeStyle =
 "pre[class*=\"language-\"]": {
     "color": "#ccc",
     "background": "none",
-    "fontFamily": "Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace",
+    "fontFamily": "Consolas, Monaco, monospace",
     "textAlign": "left",
     "whiteSpace": "pre",
     "wordSpacing": "normal",

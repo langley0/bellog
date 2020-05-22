@@ -4,6 +4,9 @@ import Post from "./Post";
 import Home from "./Home";
 import Author from "./Author";
 import About from "./About";
+import cfg from "./config";
+
+const config = cfg();
 
 function makedir(targetDir: string) {
     if (existsSync(targetDir) === false) {
@@ -16,8 +19,7 @@ function buildHome(posts: Post[]) {
     const home = new Home();
     const html = home.buildHtml(posts);
 
-    let targetDir = path.join(__dirname, "/../_sites");
-    let targetFile = path.join(targetDir, "index.html");
+    const targetFile = path.join(config.destination, "index.html");
     writeFileSync(targetFile, html, "utf-8");
 }
 
@@ -44,7 +46,7 @@ function buildAuthor(posts: Post[]) {
         const { author, posts}  = sorted[key];
         const html = Author.buildHtml(author, posts);
         
-        let targetDir = path.join(__dirname, "/../_sites/authors");
+        let targetDir = path.join(config.destination, "authors");
         makedir(targetDir);
         const targetFileName = path.join(targetDir, `${author.getId()}.html`);
         writeFileSync(targetFileName, html, "utf-8");;
@@ -54,7 +56,7 @@ function buildAuthor(posts: Post[]) {
 function buildPost(post: Post) {
     // 각각의 post 에 대해서 처리를 한다
     const html = post.buildHtml();
-    let targetDir = path.join(__dirname, "/../_sites");
+    let targetDir = path.join(config.destination);
     post.getPath().forEach(dir => {
         targetDir = path.join(targetDir, dir);
         makedir(targetDir);
@@ -76,13 +78,12 @@ function buildAbout() {
     const about = new About();
     const html = about.buildHtml();
 
-    let targetDir = path.join(__dirname, "/../_sites");
-    let targetFile = path.join(targetDir, "about.html");
+    let targetFile = path.join(config.destination, "about.html");
     writeFileSync(targetFile, html, "utf-8");
 }
 
 export default function build() {
-     const posts = Post.loadAll(__dirname + "/..");
+    const posts = Post.loadAll(path.join(config.source));
     if (posts === null) { return; }
     
     // 각각의 포스트를 작성한다
