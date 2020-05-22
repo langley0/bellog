@@ -14,7 +14,6 @@ export default function (src: string): Token | null {
         return null;
     }
     
-    
     return {
         type: "inlinecode",
         raw: src.substring(0, pos),

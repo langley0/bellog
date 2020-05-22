@@ -7,61 +7,72 @@ import Blog from "./components/Blog";
 import Author from "./Author";
 import Token from "./markdown/Token";
 
+const PATH_RE = /^(\d{4})-(\d{2})-(\d{2})-(.*)$/;
+const getText = (token: Token) => {
+    const texts:string[] =[];
+    if (token.type === "text") {
+        texts.push(token.text);
+    } else {
+        
+        token.children?.forEach(child => {
+            texts.push(...getText(child));
+        });
+    }
+    return texts;
+}
+
 export default class Post {
     private title: string;
     private author: Author;
-    private path: string;
+    private path: string[];
     private src: string;
-    private postname: string;
-    private target: string[];
     private compiled: Token;
     private digest: string;
     private timestring: string;
+    public sourceDir: string;
+    private assets: string[]
 
-    private constructor(_path: string, src: string) {
-        src = normalize(src);
-        const result = frontmatter(src);
-        if (result === null) { throw new Error("need title and author information"); }
-        const vars = result.variables;
+    private constructor(sourceDir: string) {
+        this.sourceDir = sourceDir;
 
-        // 파일의 날짜를 가져온다
-        const stats = fs.statSync(_path);
-        //const fileTimestamp = 
+        const base = path.basename(sourceDir);
+        const result = PATH_RE.exec(base);
+        if (result === null) {
+            throw new Error("invalid path: " + sourceDir);
+        }
+        
+        this.path = [result[1], result[2], result[3], result[4]];
+        // index.md 를 제외한 나머지 파일들은 모두 asset 파일이 된다
+        this.assets = fs.readdirSync(sourceDir).filter(filename => filename !== "index.md");
+        // 해당 파일을 읽는다
+        const indexFile = path.join(sourceDir, "index.md");
+        
+        // 파일의 생성시간을 읽는다
+        const stats = fs.statSync(indexFile);
         const filetime = new Date(stats.mtimeMs);
         this.timestring = filetime.toLocaleDateString("default") + `  ${filetime.getHours()}:${filetime.getMinutes()}`
+
+        // 파일내용을 읽는다
+        let src = fs.readFileSync(indexFile, "utf-8");
+        src = normalize(src);
         
-        // frontmatter 를 제거한 값을 원본으로 사용한다
-        this.src = src.substring(result.raw.length);
+        const fm= frontmatter(src);
+        if (fm === null) { throw new Error("need title and author information"); }
+        const vars = fm.variables;
         this.title = vars.title;
         this.author = Post.authors![vars.author];
-        this.path = _path;
-
-        const baseName = path.basename(_path);
-        const rule = /^(\d{4})-(\d{2})-(\d{2})-(.*).md$/;
-        const regResult = rule.exec(baseName);
-        if (regResult === null) { throw new Error("invalid file name: " + baseName) }
-        this.postname = regResult[4];
-        this.target = [regResult[1], regResult[2], regResult[3]];
         
+        // 프론트매터를 제거한 내용을 기록한다
+        this.src = src.substring(fm.raw.length);
+
+        // 마크다운을 읽는다
         const compiled = parser(this.src) ;
-        if(compiled === null) { throw new Error("markdown compiled error : " + _path); }
+        if(compiled === null) { throw new Error("markdown compiled error : " + indexFile); }
         this.compiled = compiled;
 
         // 컴파일된 결과에서 digest 를 만든다
         // text 항목을 정해진 글자수만큼 합치도록 한다 
         const maxDigest = 200;
-        const getText = (token: Token) => {
-            const texts:string[] =[];
-            if (token.type === "text") {
-                texts.push(token.text);
-            } else {
-                
-                token.children?.forEach(child => {
-                    texts.push(...getText(child));
-                });
-            }
-            return texts;
-        }
         const text = getText(this.compiled).join(" ");
         this.digest = text.substring(0, maxDigest).replace(/\n/g, " ") + "...";
     }
@@ -74,12 +85,12 @@ export default class Post {
         return this.author;
     }
 
-    getName(): string {
-        return this.postname;
+    getPath(): string[] {
+        return this.path;
     }
 
-    getTargets(): string[] {
-        return this.target;
+    getAssets(): string[] {
+        return this.assets;
     }
 
     getDigest(): string {
@@ -112,10 +123,9 @@ export default class Post {
         const posts: Post[] = [];
 
         fs.readdirSync(postDir)
-        .filter(filename => path.extname(filename) === ".md")
+        .filter(filename => PATH_RE.test(filename))
         .forEach(filename => {
-            const rawText = fs.readFileSync(path.join(postDir, filename), "utf-8");
-            const post = new Post(path.join(postDir, filename), rawText);
+            const post = new Post(path.join(postDir, filename));
             posts.push(post);
         });
 

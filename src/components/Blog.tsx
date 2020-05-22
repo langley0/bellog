@@ -7,16 +7,16 @@ const Blog: React.FC<{title: string}> = function({title, children}) {
             <head>
                 <meta charSet="utf-8"></meta>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no"></meta>
-                <link rel="stylesheet" href="../../../assets/default.css"/>
-                <link rel="stylesheet" href="../../../assets/markdown.css"/>
+                <link rel="stylesheet" href="../../../../assets/default.css"/>
+                <link rel="stylesheet" href="../../../../assets/markdown.css"/>
             </head>
             <body>
                 <header className="site-header">
                     <div className="wrapper">
                         <nav className="site-nav">
                             <div className="trigger">
-                                <a className="page-link" href="../../../">blog</a>
-                                <a className="page-link" href="../../../about.html">about</a>
+                                <a className="page-link" href="../../../../">blog</a>
+                                <a className="page-link" href="../../../../about.html">about</a>
                             </div>
                         </nav>
                     </div>

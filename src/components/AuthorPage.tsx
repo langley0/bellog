@@ -75,7 +75,7 @@ const Content: React.FC<{posts: Post[]}> = function({ posts }) {
         <div>
             <ul style={listStyle}>
             {posts.map((page, index) => <li key={index} style={listItemStyle}>
-                <a style={linkStyle} href={"./" + page.getTargets().join("/") + "/" + page.getName() + ".html"}>
+                <a style={linkStyle} href={"./" + page.getPath().join("/") + "/"}>
                     <h3>{page.getTitle()}</h3>
                     <p style={postStyle}>{page.getDigest()}</p>
                 </a>

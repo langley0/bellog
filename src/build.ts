@@ -1,4 +1,4 @@
-import { writeFileSync, readFileSync, mkdirSync, existsSync } from "fs";
+import { writeFileSync, mkdirSync, existsSync, copyFileSync } from "fs";
 import * as path from "path";
 import Post from "./Post";
 import Home from "./Home";
@@ -55,13 +55,20 @@ function buildPost(post: Post) {
     // 각각의 post 에 대해서 처리를 한다
     const html = post.buildHtml();
     let targetDir = path.join(__dirname, "/../_sites");
-    post.getTargets().forEach(dir => {
+    post.getPath().forEach(dir => {
         targetDir = path.join(targetDir, dir);
         makedir(targetDir);
     })
 
-    const targetFileName = path.join(targetDir, `${post.getName()}.html`);
+    const targetFileName = path.join(targetDir, "index.html");
     writeFileSync(targetFileName, html, "utf-8");;
+
+    // 어셋 파일을 복사한다
+    post.getAssets().forEach(filename => {
+        const src = path.join(post.sourceDir, filename);
+        const dst = path.join(targetDir,filename);
+        copyFileSync(src, dst);
+    });
 }
 
 function buildAbout() {

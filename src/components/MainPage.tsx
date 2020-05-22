@@ -31,7 +31,7 @@ const MainPage: React.FC<{posts: Post[]}> = function({ posts }) {
                     </div>
                     <ul className="post-list">
                         {posts.map((post,index) => {
-                            const postUrl = "./" + post.getTargets().join("/") + "/" + post.getName() + ".html";
+                            const postUrl = "./" + post.getPath().join("/") + "/";
                             return <li key={index}>
                                 <h2>
                                     <a className="post-title" href={postUrl}>{post.getTitle()}</a>
