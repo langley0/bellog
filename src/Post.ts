@@ -6,6 +6,10 @@ import { parser, renderer, frontmatter, normalize } from "./markdown"
 import Blog from "./components/Blog";
 import Author from "./Author";
 import Token from "./markdown/Token";
+import cfg from "./config";
+
+const config = cfg();
+
 
 const PATH_RE = /^(\d{4})-(\d{2})-(\d{2})-(.*)$/;
 const getText = (token: Token) => {
@@ -109,7 +113,7 @@ export default class Post {
         return html;
     }
 
-    static authors = Author.loadAll(__dirname + "/..");
+    static authors = Author.loadAll(path.join(config.source));
     static loadAll(dir: string): Post[] | null {
 
         // 주어진 폴더위치를 기준으로 post 폴더를 찾아서 로딩한다
