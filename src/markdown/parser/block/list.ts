@@ -70,7 +70,7 @@ export default function list(src: string, prev: Token): Token | null {
         // 기존의 리스트 타입과 일치하여야 한다
         && prev.ordered === isOrdered) {
         
-        prev.children?.push(listItem);
+            prev.children && prev.children.push(listItem);
 
         // dumy 를 반환한다
         return {

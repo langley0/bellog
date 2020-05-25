@@ -14,7 +14,7 @@ const getText = (token: Token) => {
         texts.push(token.text);
     } else {
         
-        token.children?.forEach(child => {
+        token.children && token.children.forEach(child => {
             texts.push(...getText(child));
         });
     }

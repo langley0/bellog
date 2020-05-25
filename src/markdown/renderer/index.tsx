@@ -71,5 +71,5 @@ const Viewer = (props: {compiled: Token[]}): React.ReactElement => {
 }
 
 export default function renderer(compiled: Token) {
-    return <Viewer compiled={compiled?.children || []}/>;
+    return <Viewer compiled={compiled && compiled.children || []}/>;
 }
