@@ -93,7 +93,7 @@ export default function build() {
 
     // 메인페이지를 작성한다
     // 간단한 내용요약을 만들어야 한다. 어떻게??
-    buildHome(posts);
+    buildHome(posts.reverse());
 
     // 작가페이지를 작성한다
     buildAuthor(posts);
