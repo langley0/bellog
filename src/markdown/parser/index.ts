@@ -29,6 +29,9 @@ function replaceLink(token: Token, indexer: LinkReferenceIndexer) {
         if (token.href !== undefined 
             && indexer.hasOwnProperty(token.href)) {
             token.href = indexer[token.href];
+        } else {
+            token.type = "text";
+            token.text = "[" + token.text + "]";
         }
     }
 
