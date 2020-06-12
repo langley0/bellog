@@ -26,13 +26,14 @@ function findReference(token: Token): LinkReference[] {
 
 function replaceLink(token: Token, indexer: LinkReferenceIndexer) {
     if (token.type === "link") {
-        if (token.href !== undefined 
-            && indexer.hasOwnProperty(token.href)) {
-            token.href = indexer[token.href];
-        } else {
-            token.type = "text";
-            token.text = "[" + token.text + "]";
-        }
+        if (token.href === undefined) {
+            if (indexer.hasOwnProperty(token.text)) {
+                token.href = indexer[token.text];
+            } else {
+                token.type = "text";
+                token.text = "[" + token.text + "]";
+            }
+        } 
     }
 
     // child 를 검사한다

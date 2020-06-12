@@ -53,13 +53,17 @@ export default function link(src: string): Token | null {
     if (href === "") {
         // href 가 얻어지지 않았다면 label 과 같은 이름을 사용한다
         // reference link 로 간주한다
-        href = label;
-    }
-
-    return {
-        type: "link",
-        raw: src.substring(0, pos),
-        text: label,
-        href: href,
+        return {
+            type: "link",
+            raw: src.substring(0, pos),
+            text: label,
+        }
+    } else {
+        return {
+            type: "link",
+            raw: src.substring(0, pos),
+            text: label,
+            href: href,
+        }
     }
 }

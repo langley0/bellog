@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc",
     "start": "ts-node ./src/index.ts serve",
     "build": "ts-node ./src/index.ts build",
     "publish": "git subtree push --prefix _sites origin gh-pages",
